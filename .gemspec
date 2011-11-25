@@ -14,6 +14,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = ">= 1.3.6"
   s.add_dependency 'ripl', '>= 0.4.2'
   s.add_dependency 'eventmachine'
+  s.add_dependency 'ffi'
   s.files = Dir.glob(%w[lib/**/*.rb [A-Z]*.{txt,rdoc}]) + %w{Rakefile .gemspec}
   s.extra_rdoc_files = ["README.rdoc", "LICENSE.txt"]
   s.license = 'MIT'
