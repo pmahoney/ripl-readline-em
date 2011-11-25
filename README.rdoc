@@ -1,0 +1,33 @@
+== Description
+
+Run EventMachine code in a ripl shell asynchronously with readline
+editing and completion.  Uses FFI to access the alternate Readline
+callback interface.
+
+== Install
+Install the gem with:
+
+    gem install ripl-readline-em
+
+== Usage
+
+    require 'ripl/readline/em'
+
+    EventMachine.run do
+      EventMachine.add_periodic_timer(2) do
+        puts "#{Time.now} message"
+        Readline.refresh_line
+      end
+
+      Ripl.start  # exiting ripl shell shuts down EventMachine
+    end
+
+Writing output to stdout writes over the current input line.  A call
+to Readline.refresh_line fixes things up, but a copy of the prompt and
+any input text follows along with the line of output. I suspect this
+isn't the best way...
+
+== Todo
+
+Improve technique of being able to write output without messing up the
+input line.
