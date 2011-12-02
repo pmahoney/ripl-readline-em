@@ -1,4 +1,5 @@
 require 'ffi'
+require 'readline'
 
 module Readline
   # An alternate, callback-based interface to Readline for use in a
@@ -11,7 +12,15 @@ module Readline
   module Callback
     extend FFI::Library
 
-    ffi_lib 'readline'
+    def self.editline?
+      @__is_editline__ ||= (Readline::VERSION rescue nil).to_s[/editline/i]
+    end
+
+    if editline?
+      ffi_lib 'edit'
+    else
+      ffi_lib 'readline'
+    end
 
     callback :rl_vcpfunc_t, [:string], :void
     attach_function :rl_callback_handler_install, [:string, :rl_vcpfunc_t], :void
@@ -19,8 +28,15 @@ module Readline
     attach_function :rl_callback_handler_remove, [], :void
 
     # as-is functions
+    attach_function :forced_update_display, :rl_forced_update_display, [], :void
 
-    attach_function :set_prompt, :rl_set_prompt, [:string], :int
+    if editline?
+      def set_prompt(*args)
+        # noop; rl_set_prompt isn't exported by EditLine
+      end
+    else
+      attach_function :set_prompt, :rl_set_prompt, [:string], :int
+    end
 
     # Set up the terminal for readline I/O and display the initial
     # expanded value of prompt. Save the value of `block` to call when a
