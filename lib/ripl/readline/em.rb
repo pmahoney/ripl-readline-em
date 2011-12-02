@@ -7,7 +7,7 @@ require 'ripl/readline/eminput'
 module Ripl
   module Readline
     module Em
-      VERSION = '0.2.0'
+      VERSION = '0.2.1'
 
       def get_input
         history << @input
