@@ -11,24 +11,5 @@ Install the gem with:
 
 == Usage
 
-    require 'ripl/readline/em'
+    :include: examples/ripl_readline_em.rb
 
-    EventMachine.run do
-      EventMachine.add_periodic_timer(2) do
-        # example writing output while line is being edited
-        puts "#{Time.now}"
-        Readline.refresh_line
-      end
-
-      Ripl.start  # exiting ripl shell shuts down EventMachine
-    end
-
-Writing output to stdout writes over the current input line.  A call
-to Readline.refresh_line fixes things up, but a copy of the prompt and
-any input text follows along with the line of output. I suspect this
-isn't the best way...
-
-== Todo
-
-Improve technique of being able to write output without messing up the
-input line.
