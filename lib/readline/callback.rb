@@ -30,6 +30,14 @@ module Readline
     # as-is functions
     attach_function :forced_update_display, :rl_forced_update_display, [], :void
 
+    # ruby 1.8 doesn't expose readline's line buffer
+    unless Readline.respond_to?(:line_buffer)
+      attach_variable :rl_line_buffer, :string
+      def line_buffer
+        ::Readline::Callback.rl_line_buffer
+      end
+    end
+ 
     if editline?
       def set_prompt(*args)
         # noop; rl_set_prompt isn't exported by EditLine
