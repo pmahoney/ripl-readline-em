@@ -3,12 +3,11 @@ require 'readline/callback'
 require 'ripl'
 require 'ripl/readline'
 require 'ripl/readline/eminput'
+require 'ripl/readline/em/version'
 
 module Ripl
   module Readline
     module Em
-      VERSION = '0.2.1'
-
       def get_input
         history << @input
         @input
